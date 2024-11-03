@@ -32,13 +32,13 @@ local Credits = "\n"..[[
          
 
 
-local function appendfile(filename,content)
+local appendfile = newcclosure(function(filename,content)
     if not isfile(filename) then 
         writefile(filename,string.format("%s\n %s",Credits,content))
     end 
 
     return old_append(filename,content)
-end 
+end)
 
 local function format(tab)
     local result = "{"
@@ -65,12 +65,12 @@ local function foreach(tab)
     end 
 end 
 
-function unpack(...)
+unpack = newcclosure(function(...)
     if type(old(...)) == "table" then 
         foreach(old(...))
     end 
     return old(...)
-end 
+end)
 
 
 --[[ Script ]]-- 
